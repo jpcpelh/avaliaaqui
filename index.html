@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7028f5">
+  <title>Avalia Aqui | Vote e avalie</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" id="brandHome">
+      <img class="brand-logo" src="image.png" alt="Logo Avalia Aqui">
+      <span class="brand-label">Avalia <b>Aqui</b></span>
+    </a>
+    <button class="icon-button" id="adminOpen" aria-label="Abrir área administrativa" title="Área administrativa">⚙️</button>
+  </header>
+
+  <main class="container">
+    <section class="hero" id="welcomeScreen">
+      <img class="hero-logo" src="image.png" alt="Logo Avalia Aqui">
+      <span class="eyebrow">SUA OPINIÃO CONTA</span>
+      <h1>Bem-vindo ao<br><span>Avalia Aqui!</span></h1>
+      <p>Projeto criado para o Mundo Senai.</p>
+
+      <form id="startForm" class="start-form">
+        <label for="voterName">Digite seu nome para começar</label>
+        <input id="voterName" name="voterName" maxlength="60" placeholder="Digite seu nome" required>
+        <button class="button primary" type="submit">Começar a votar <span>→</span></button>
+      </form>
+
+      <div class="hero-note">🥇 1º lugar: 3 pontos &nbsp; · &nbsp; 🥈 2º: 2 pontos &nbsp; · &nbsp; 🥉 3º: 1 ponto</div>
+    </section>
+
+    <section id="voteScreen" class="hidden">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">VOTAÇÃO</span>
+          <h2>Escolha seus favoritos</h2>
+          <p id="voterGreeting"></p>
+        </div>
+        <div class="vote-progress" id="voteProgress">0 de 3 escolhidos</div>
+      </div>
+
+      <div class="selection-grid">
+        <label class="select-card">
+          <span>🥇</span>
+          <div><b>1º lugar</b><small>3 pontos</small></div>
+          <select id="firstChoice" required><option value="">Escolha um competidor</option></select>
+        </label>
+        <label class="select-card">
+          <span>🥈</span>
+          <div><b>2º lugar</b><small>2 pontos</small></div>
+          <select id="secondChoice" required><option value="">Escolha um competidor</option></select>
+        </label>
+        <label class="select-card">
+          <span>🥉</span>
+          <div><b>3º lugar</b><small>1 ponto</small></div>
+          <select id="thirdChoice" required><option value="">Escolha um competidor</option></select>
+        </label>
+      </div>
+
+      <div class="section-heading competitors-heading">
+        <div>
+          <h2>Conheça os competidores</h2>
+          <p>Veja as fotos e descrições antes de confirmar seu voto.</p>
+        </div>
+      </div>
+
+      <div id="competitorGrid" class="competitor-grid"></div>
+
+      <div class="submit-vote-wrap">
+        <p id="voteError" class="error" role="alert"></p>
+        <button id="submitVote" class="button primary">Confirmar meu voto ✓</button>
+      </div>
+    </section>
+
+    <section id="thanksScreen" class="thanks-card hidden">
+      <div class="success-mark">✓</div>
+      <span class="eyebrow">VOTO REGISTRADO</span>
+      <h2>Obrigado por participar!</h2>
+      <p>Seu voto foi registrado. Agora acompanhe o Avalia Aqui no Instagram.</p>
+
+      <div class="instagram-panel">
+        <div class="instagram-icon">◎</div>
+        <div>
+          <b>@avaliaaqui_2026</b>
+          <small>Acompanhe para saber os vencedores e também novidades</small>
+        </div>
+      </div>
+
+      <img id="instagramQr" class="qr-code" alt="QR Code para abrir o Instagram">
+      <p class="qr-caption">Aponte a câmera do celular para o QR Code.</p>
+
+      <a class="button primary instagram-button" id="instagramLink"
+         href="https://www.instagram.com/p/DewjHGDx2ml/?cplk=MW83aGtzOXYxNWxvNg=="
+         target="_blank" rel="noopener noreferrer">Abrir Instagram ↗</a>
+
+      <button id="returnHome" class="button secondary">Voltar ao início</button>
+    </section>
+
+    <section id="closedScreen" class="hidden">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">COMPETIÇÃO ENCERRADA</span>
+          <h2>Conheça o pódio final</h2>
+          <p>Obrigado a todos que participaram!</p>
+        </div>
+      </div>
+      <div id="podium" class="podium"></div>
+      <div class="results-list-wrap">
+        <h3>Classificação completa</h3>
+        <div id="finalResults"></div>
+      </div>
+    </section>
+
+    <section id="adminScreen" class="hidden">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">PAINEL DE CONTROLE</span>
+          <h2>Área administrativa</h2>
+          <p>Gerencie competidores, acompanhe os resultados e encerre a competição.</p>
+        </div>
+        <button class="button secondary small" id="adminBack">Sair do painel</button>
+      </div>
+
+      <div class="admin-stats">
+        <div class="stat-card"><small>Votos registrados</small><strong id="totalVotes">0</strong></div>
+        <div class="stat-card"><small>Competidores</small><strong id="totalCompetitors">0</strong></div>
+        <div class="stat-card"><small>Status</small><strong id="competitionStatus">Aberta</strong></div>
+      </div>
+
+      <div class="admin-columns">
+        <div class="admin-box">
+          <h3 id="competitorFormTitle">Cadastrar competidor</h3>
+          <form id="competitorForm">
+            <input type="hidden" id="competitorId">
+
+            <label for="competitorName">Nome</label>
+            <input id="competitorName" maxlength="80" required placeholder="Nome do competidor">
+
+            <label for="competitorDescription">Descrição</label>
+            <textarea id="competitorDescription" maxlength="500" rows="3" required placeholder="Conte um pouco sobre o competidor"></textarea>
+
+            <label for="competitorPhoto">Foto</label>
+            <input id="competitorPhoto" type="file" accept="image/*">
+
+            <small class="form-help">
+              A foto é opcional. Ao editar, se não enviar uma nova foto, a foto atual será mantida.
+              Prefira imagens compactadas para economizar espaço.
+            </small>
+
+            <div class="form-actions">
+              <button class="button primary" id="saveCompetitor" type="submit">Salvar competidor</button>
+              <button class="button secondary hidden" id="cancelEdit" type="button">Cancelar edição</button>
+            </div>
+            <p id="adminFormMessage" class="form-message" role="status"></p>
+          </form>
+        </div>
+
+        <div class="admin-box">
+          <h3>Competidores cadastrados</h3>
+          <p class="muted">Não há limite fixo de 10 competidores. Use fotos compactadas para melhor desempenho.</p>
+          <div id="adminCompetitorList" class="admin-competitor-list"></div>
+        </div>
+      </div>
+
+      <div class="admin-box results-admin">
+        <div class="admin-box-heading">
+          <div>
+            <h3>Resultados parciais</h3>
+            <p class="muted">Pontuação calculada por 3, 2 e 1 ponto.</p>
+          </div>
+          <button class="button secondary small" id="refreshResults">Atualizar</button>
+        </div>
+        <div id="adminResults"></div>
+      </div>
+
+      <div class="danger-zone">
+        <div>
+          <b>Controle da competição</b>
+          <p>Encerre a votação atual ou inicie uma nova rodada, zerando os votos anteriores.</p>
+        </div>
+        <div class="competition-actions">
+          <button id="closeCompetition" class="button danger">Encerrar competição</button>
+          <button id="restartCompetition" class="button primary">Iniciar nova votação ↻</button>
+        </div>
+      </div>
+
+      <p class="admin-warning">
+        Demonstração: os dados ficam salvos neste navegador. Para votação pública em vários celulares,
+        será necessário conectar o site a um banco de dados/servidor.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year"></span> Avalia Aqui</span>
+    <span>Mundo Senai</span>
+  </footer>
+
+  <dialog id="passwordDialog" class="password-dialog">
+    <form id="passwordForm" method="dialog">
+      <button type="button" class="dialog-close" id="passwordClose" aria-label="Fechar">×</button>
+      <span class="eyebrow">ACESSO RESTRITO</span>
+      <h2>Área administrativa</h2>
+      <p>Digite a senha para continuar.</p>
+      <label for="adminPassword">Senha</label>
+      <input id="adminPassword" type="password" required autocomplete="current-password" placeholder="Senha administrativa">
+      <p id="passwordError" class="error"></p>
+      <button class="button primary" type="submit">Entrar</button>
+    </form>
+  </dialog>
+
+  <dialog id="confirmDialog" class="password-dialog">
+    <form id="confirmForm" method="dialog">
+      <span class="eyebrow">ATENÇÃO</span>
+      <h2>Encerrar competição?</h2>
+      <p>Depois de encerrar, não será possível registrar novos votos nesta versão.</p>
+      <div class="form-actions">
+        <button class="button secondary" value="cancel">Cancelar</button>
+        <button class="button danger" id="confirmCloseCompetition" value="confirm">Sim, encerrar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="restartDialog" class="password-dialog">
+    <form id="restartForm" method="dialog">
+      <span class="eyebrow">NOVA RODADA</span>
+      <h2>Iniciar nova votação?</h2>
+      <p>Os votos da competição anterior serão apagados deste navegador. Os competidores cadastrados serão mantidos.</p>
+      <div class="form-actions">
+        <button class="button secondary" value="cancel">Cancelar</button>
+        <button class="button primary" id="confirmRestartCompetition" value="confirm">Sim, iniciar nova</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
